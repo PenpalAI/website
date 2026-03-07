@@ -807,9 +807,12 @@
 
     .team-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 24px;
       margin-top: 56px;
+      max-width: 860px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .team-card {
@@ -844,6 +847,20 @@
     .team-avatar.av2 { background: linear-gradient(135deg, var(--blue-dark), var(--blue)); }
     .team-avatar.av3 { background: linear-gradient(135deg, #5B72EE, var(--blue)); }
     .team-avatar.av4 { background: linear-gradient(135deg, var(--blue), #8BA8FF); }
+
+    .team-avatar-photo {
+      overflow: hidden;
+      border: 3px solid var(--border);
+      box-shadow: 0 4px 16px rgba(107,140,247,0.15);
+    }
+
+    .team-avatar-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
 
     .team-name { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
     .team-role { font-size: 0.8rem; font-weight: 500; color: var(--blue); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.06em; }
@@ -1017,8 +1034,177 @@
     .footer-built span { color: var(--yellow); }
 
     /* ── RESPONSIVE ── */
+    /* ── HERO PARTICLES ── */
+    .hero-particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(0) translateX(0) scale(1);   opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-110vh) translateX(40px) scale(0.5); opacity: 0; }
+    }
+
+    /* ── HERO GRADIENT PULSE ── */
+    @keyframes heroPulse {
+      0%, 100% { background: #6B8CF7; }
+      50%       { background: #5a7ef0; }
+    }
+
+    #hero { animation: heroPulse 8s ease-in-out infinite; }
+
+    /* ── BUTTON RIPPLE ── */
+    .btn-yellow, .btn-blue, .nav-cta {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-yellow::after, .btn-blue::after, .nav-cta::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 0; height: 0;
+      background: rgba(255,255,255,0.25);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
+      opacity: 0;
+    }
+
+    .btn-yellow:active::after, .btn-blue:active::after, .nav-cta:active::after {
+      width: 300px; height: 300px;
+      opacity: 0;
+      transition: 0s;
+    }
+
+    /* ── GLOWING CTA ── */
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(245,185,66,0.4); }
+      50%       { box-shadow: 0 4px 40px rgba(245,185,66,0.75), 0 0 60px rgba(245,185,66,0.2); }
+    }
+
+    .btn-yellow { animation: glowPulse 3s ease-in-out infinite; }
+
+    /* ── TERMINAL CURSOR ── */
+    .terminal-cursor {
+      display: inline-block;
+      width: 7px; height: 14px;
+      background: var(--blue);
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    /* ── STATS BAR ── */
+    #stats {
+      padding: 60px 24px;
+      background: var(--blue);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stats-grid-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .stats-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      position: relative;
+      text-align: center;
+    }
+
+    .stat-item {
+      padding: 20px 32px;
+      border-right: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-number span { color: var(--yellow); }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.7);
+      font-weight: 500;
+    }
+
+    /* ── FLOATING BADGE ON HERO ── */
+    @keyframes floatBadge {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-6px); }
+    }
+
+    .badge { animation: floatBadge 4s ease-in-out infinite; }
+
+    /* ── SHINE EFFECT ON FEATURE CARDS ── */
+    .feature-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::after {
+      content: '';
+      position: absolute;
+      top: -50%; left: -75%;
+      width: 50%; height: 200%;
+      background: linear-gradient(
+        to right,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.08) 50%,
+        rgba(255,255,255,0) 100%
+      );
+      transform: skewX(-20deg);
+      transition: left 0.6s ease;
+    }
+
+    .feature-card:hover::after { left: 125%; }
+
+    /* ── WAVY SECTION DIVIDER ── */
+    .wave-divider {
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+    }
+
+    .wave-divider svg { display: block; }
+
     @media (max-width: 900px) {
-      .team-grid { grid-template-columns: repeat(2, 1fr); }
       .features-grid { grid-template-columns: repeat(2, 1fr); }
       .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -1049,7 +1235,7 @@
     @media (max-width: 560px) {
       .features-grid { grid-template-columns: 1fr; }
       .testimonials-grid { grid-template-columns: 1fr; }
-      .team-grid { grid-template-columns: 1fr; max-width: 320px; margin-left: auto; margin-right: auto; }
+      .team-grid { grid-template-columns: 1fr; max-width: 320px; }
     }
   </style>
 </head>
@@ -1086,6 +1272,7 @@
   <section id="hero">
     <div class="hero-grid"></div>
     <div class="hero-glow"></div>
+    <div class="hero-particles" id="particles"></div>
 
     <!-- Wordmark logo in hero — blue-on-blue looks seamless and native -->
     <img src="penpai_logo.svg" alt="Penpal AI" class="hero-wordmark fade-up" />
@@ -1178,6 +1365,8 @@
         <br/>
         <div><span class="t-dim">// Citations detected in draft</span></div>
         <div><span class="t-blue">→ 3 sources auto-formatted</span> <span class="t-green">[APA]</span></div>
+        <br/>
+        <div><span class="t-dim">▋</span><span class="terminal-cursor"></span></div>
       </div>
     </div>
   </section>
@@ -1393,7 +1582,7 @@
           <div class="testimonial-author">
             <div class="author-avatar"><img src="https://api.dicebear.com/9.x/lorelei-neutral/svg?seed=Callum&backgroundColor=e0e7ff&radius=50" alt="Marcus T." /></div>
             <div>
-              <div class="author-name">Marcus T.</div>
+              <div class="author-name">Daniel K.</div>
               <div class="author-desc">Research student, CMU</div>
             </div>
           </div>
@@ -1427,32 +1616,31 @@
       </div>
       <div class="team-grid">
         <div class="team-card fade-up delay-1">
-          <div class="team-avatar">S</div>
+          <div class="team-avatar team-avatar-photo">
+            <img src="assets/shreyas.jpg" alt="Shreyas Sharma" onerror="this.parentElement.innerHTML='S'" />
+          </div>
           <div class="team-name">Shreyas Sharma</div>
           <div class="team-role">Co-Founder</div>
           <div class="team-bio">Building Penpal at the intersection of AI, writing, and product. Focused on making intelligent writing tools actually feel human.</div>
-          <span class="team-school">CMU</span>
+          <span class="team-school">Carnegie Mellon</span>
         </div>
         <div class="team-card fade-up delay-2">
-          <div class="team-avatar av2">—</div>
-          <div class="team-name">Co-Founder</div>
+          <div class="team-avatar team-avatar-photo av2">
+            <img src="assets/steve.jpg" alt="Steve Yin" onerror="this.parentElement.innerHTML='S'" />
+          </div>
+          <div class="team-name">Steve Yin</div>
           <div class="team-role">Co-Founder</div>
-          <div class="team-bio">Architecting the Huffman Librarian and Logic Teacher engines that sit at the core of Penpal's writing intelligence.</div>
-          <span class="team-school">Coming Soon</span>
+          <div class="team-bio">Architecting the Huffman Librarian and Logic Teacher engines at the core of Penpal's writing intelligence.</div>
+          <span class="team-school">Duke</span>
         </div>
         <div class="team-card fade-up delay-3">
-          <div class="team-avatar av3">—</div>
-          <div class="team-name">Team Member</div>
-          <div class="team-role">Head of Product</div>
-          <div class="team-bio">Translating user insights from our alpha into a product experience that feels invisible yet indispensable.</div>
-          <span class="team-school">Coming Soon</span>
-        </div>
-        <div class="team-card fade-up delay-4">
-          <div class="team-avatar av4">—</div>
-          <div class="team-name">Team Member</div>
-          <div class="team-role">Head of Growth</div>
-          <div class="team-bio">Driving our GTM strategy across student communities, content creators, and enterprise knowledge workers.</div>
-          <span class="team-school">Coming Soon</span>
+          <div class="team-avatar team-avatar-photo av3">
+            <img src="assets/hana.jpg" alt="Hana Chen" onerror="this.parentElement.innerHTML='H'" />
+          </div>
+          <div class="team-name">Hana Chen</div>
+          <div class="team-role">Co-Founder</div>
+          <div class="team-bio">Shaping the product experience and design systems that make Penpal feel invisible, intuitive, and indispensable.</div>
+          <span class="team-school">Northwestern</span>
         </div>
       </div>
     </div>
@@ -1504,7 +1692,6 @@
     </div>
     <div class="footer-bottom">
       <p class="footer-copy">© 2026 Penpal AI. All rights reserved.</p>
-      <p class="footer-built">Made with <span>♥</span> at CMU, Duke & Northwestern</p>
     </div>
   </footer>
 
@@ -1585,6 +1772,128 @@
         if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
       });
     });
+
+    // ── FLOATING PARTICLES ──
+    (function spawnParticles() {
+      const container = document.getElementById('particles');
+      if (!container) return;
+      const count = 22;
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const size = Math.random() * 8 + 3;
+        const left = Math.random() * 100;
+        const delay = Math.random() * 14;
+        const duration = Math.random() * 12 + 10;
+        p.style.cssText = `
+          width:${size}px; height:${size}px;
+          left:${left}%;
+          bottom:-${size}px;
+          animation-duration:${duration}s;
+          animation-delay:-${delay}s;
+          opacity:${Math.random() * 0.4 + 0.1};
+        `;
+        container.appendChild(p);
+      }
+    })();
+
+    // ── COUNTER ANIMATION ──
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.target, 10);
+      const duration = 1800;
+      const start = performance.now();
+      function step(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        // ease out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(eased * target).toLocaleString();
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = target.toLocaleString();
+      }
+      requestAnimationFrame(step);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          animateCounter(e.target);
+          counterObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+    // ── TERMINAL TYPEWRITER ──
+    (function typeTerminal() {
+      const lines = [
+        { el: null, text: '// Passive mode running across workspace', cls: 't-dim' },
+        { el: null, text: '✓ Voice profile loaded (487 samples)', cls: 't-blue' },
+        { el: null, text: '✓ Grammar engine running', cls: 't-blue' },
+        { el: null, text: '✓ Fact-check layer standby', cls: 't-blue' },
+        { el: null, text: '── Monitoring: Gmail, Notion, Docs', cls: 't-dim' },
+        { el: null, text: '⚡ Suggestion ready', cls: 't-yellow' },
+        { el: null, text: '"sounds a bit formal for your usual tone"', cls: 't-dim' },
+        { el: null, text: '→ rewrite in your voice?', cls: 't-green' },
+        { el: null, text: '// Citations detected in draft', cls: 't-dim' },
+        { el: null, text: '→ 3 sources auto-formatted [APA]', cls: 't-blue' },
+      ];
+
+      const body = document.querySelector('.terminal-body');
+      if (!body) return;
+
+      // Clear existing content, keep cursor
+      body.innerHTML = '<span class="terminal-cursor"></span>';
+      const cursor = body.querySelector('.terminal-cursor');
+
+      let lineIdx = 0;
+      function typeLine() {
+        if (lineIdx >= lines.length) {
+          // restart after pause
+          setTimeout(() => {
+            body.innerHTML = '<span class="terminal-cursor"></span>';
+            const newCursor = body.querySelector('.terminal-cursor');
+            lineIdx = 0;
+            setTimeout(typeLine, 600);
+          }, 3500);
+          return;
+        }
+        const { text, cls } = lines[lineIdx];
+        const lineEl = document.createElement('div');
+        body.insertBefore(lineEl, cursor);
+        let charIdx = 0;
+        const speed = lineIdx === 0 ? 18 : 20;
+        function typeChar() {
+          if (charIdx < text.length) {
+            const span = document.createElement('span');
+            span.className = cls;
+            span.textContent = text[charIdx];
+            lineEl.appendChild(span);
+            charIdx++;
+            setTimeout(typeChar, speed + Math.random() * 12);
+          } else {
+            // blank line after certain lines
+            if ([0, 3, 4, 7, 8].includes(lineIdx)) {
+              body.insertBefore(document.createElement('br'), cursor);
+            }
+            lineIdx++;
+            setTimeout(typeLine, lineIdx === 1 ? 80 : 120);
+          }
+        }
+        typeChar();
+      }
+
+      // Start typing when terminal is visible
+      const termObs = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          setTimeout(typeLine, 400);
+          termObs.disconnect();
+        }
+      }, { threshold: 0.4 });
+      termObs.observe(body);
+    })();
+
   </script>
 
 </body>
